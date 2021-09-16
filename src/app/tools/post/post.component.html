@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>{{creatorName}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      {{postData?.comment}}
+  </mat-card-content>
+  <mat-card-footer>
+    <ng-container *ngIf="comments">Comments</ng-container>
+
+    <ul *ngFor="let comment of comments" [ngClass]="{'comment-container': true}" id="reply-box">
+        <li *ngIf="comment?.depth === 0; then firstComment" style="display:none;"></li>
+        <li *ngIf="comment?.depth === 1; else childComment" style="display:none;"></li>
+          <ng-template #firstComment>
+                <li >
+                    {{comment?.creatorName}} : {{comment?.comment}}
+                    <mat-icon (click)="onReplyClick(comment)" class="action-item" color="warn">chat_bubble_outline</mat-icon>
+                </li>
+          </ng-template>
+          <ng-template #childComment>
+            <ul *ngFor="let comment1 of comment.comments">
+                <li>
+                    {{comment1?.creatorName}} : {{comment1.comment}}
+                    <mat-icon (click)="onReplyClick(comment1)" class="action-item" color="warn">chat_bubble_outline</mat-icon>
+                </li>
+                <ul *ngFor="let comment2 of comment1.comments">
+                    <li>
+                        {{comment2?.creatorName}} : {{comment2.comment}}
+                    </li>
+                </ul>
+            </ul>
+          </ng-template>
+    </ul>
+    
+  </mat-card-footer>
+  <mat-card-actions>
+      <mat-icon (click)="onCommentClick()" class="action-item" color="warn">chat_bubble_outline</mat-icon>
+  </mat-card-actions>
+</mat-card>

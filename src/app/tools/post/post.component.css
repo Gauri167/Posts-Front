@@ -1,0 +1,10 @@
+.action-item {
+    margin-left: .5em;
+    cursor: pointer;
+}
+
+#reply-box {
+    overflow: auto;
+    padding: 0 1em;
+    margin-left: 2%;
+}
